@@ -1,0 +1,11 @@
+skeleton.png
+size:2048,1024
+filter:Linear,Linear
+pma:true
+Alfa
+bounds:979,867,48,49
+Luce
+bounds:979,918,59,58
+rotate:90
+mAGIC
+bounds:2,2,975,975
