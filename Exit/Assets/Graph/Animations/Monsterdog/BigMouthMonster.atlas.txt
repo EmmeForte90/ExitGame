@@ -1,0 +1,23 @@
+BigMouthMonster.png
+size:1024,512
+filter:Linear,Linear
+pma:true
+Eye
+bounds:604,184,63,81
+busto
+bounds:2,151,324,356
+coda
+bounds:103,9,140,90
+rotate:90
+mandibola
+bounds:364,2,238,229
+orecchio
+bounds:195,10,139,167
+rotate:90
+testa
+bounds:328,233,274,257
+rotate:90
+zampa ante
+bounds:2,4,99,145
+zampaposter
+bounds:587,267,121,240
