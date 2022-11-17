@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+
 
 public class LevelChanger : MonoBehaviour
 {
-   // public int iLevelToLoad;
     public string sLevelToLoad;
-    //public bool useIntegerToLoadLevel = false;
+    [SerializeField]
+    private string _colliderScript;
+
+     [SerializeField]
+     private UnityEvent _colissionEntered;
+
 
     void OnTriggerEnter(Collider a_Collider)
     {
@@ -17,11 +23,23 @@ public class LevelChanger : MonoBehaviour
             //Prevent death state to be used if the collider is no-clipping
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
-                              SceneManager.LoadScene(sLevelToLoad);
+                StartCoroutine(NextLevel());
+                _colissionEntered?.Invoke();
 
             }
         }
     }
+
+
+
+     IEnumerator NextLevel()
+     {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(sLevelToLoad);
+
+     }
+    
+
 
 /*
     private void OnTriggerEnter2D(Collider2D collision)
