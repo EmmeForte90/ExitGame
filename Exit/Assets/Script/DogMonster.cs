@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DogMonster : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class DogMonster : MonoBehaviour
     protected bool isDead = false;
     protected bool movingRight = true;
     protected bool isAttack = false;
+    protected bool attack = false;
     
     [Header("Movimenti")]
     [SerializeField]
@@ -49,19 +51,14 @@ public class DogMonster : MonoBehaviour
     public Transform RP;
     private float horizontal;
     [Header("parametri d'attacco")]
-    [SerializeField] Transform attackPos;
     [SerializeField] Transform agroPos;
     [SerializeField] LayerMask playerlayer;
-    [SerializeField] float nextAttackTime;
-    [SerializeField] public float attackRange;
-    [SerializeField] public float animationAttackRange;
     [SerializeField] public float agroRange;
 
     //[Header ("Morte")]
     //public GameObject DIE;
 
 
-    //Variabile per il tempo d'attacco
 
     private void Awake()
     {
@@ -78,15 +75,23 @@ public class DogMonster : MonoBehaviour
 
     }
 
-void Update()
-{    
-    #region Se il nemico NON sta attaccando...
+     #region  indicatori engine
+void OnDrawGizmosSelected()
+{
+     Gizmos.color = Color.white;
+    Gizmos.DrawWireSphere(agroPos.position, agroRange);
+}
+#endregion
 
-/*float disToPlayer = Vector2.Distance(Enemy.transform.position, PlayerMovement.instance.transform.position);
+
+void Update()
+{
+
+//Calcolo distanza tra player e nemico
+float disToPlayer = Vector2.Distance(transform.position, PlayerMovement.instance.transform.position);
 Debug.DrawRay(transform.position, new Vector2(agroRange, 0), Color.red);
-Debug.DrawRay(transform.position, new Vector2(attackRange, 0), Color.blue);
-if(!isAttack && disToPlayer > agroRange){
-*/
+#region Se il nemico NON sta attaccando...
+if(disToPlayer > agroRange){
 
             if (moveCount > 0)
             //Tempo di pausa per far fermare il nemico
@@ -144,36 +149,82 @@ if(!isAttack && disToPlayer > agroRange){
                 }
                 anim.SetBool("isMoving", false);
             }
-        } 
-#endregion
-
-
-
-    #region  indicatori engine
-void OnDrawGizmosSelected()
-{
-    Gizmos.color = Color.red;
-    Gizmos.DrawWireSphere(attackPos.position, attackRange);
-     Gizmos.color = Color.white;
-    Gizmos.DrawWireSphere(agroPos.position, agroRange);
-     Gizmos.color = Color.blue;
-    Gizmos.DrawWireSphere(attackPos.position, animationAttackRange);
 }
 #endregion
 
-#region  Flippa lo sprite
-private void Flip()
+#region Se il nemico STA ATTACCANDO
+else if(disToPlayer < agroRange && !isWait)
+{          
+    
+    //Insegue il player
+    ChasePlayer();
+    
+    
+}
+//Altrimenti smettere di inseguirlo
+    else if(disToPlayer > agroRange && !isWait)
     {
-        if (movingRight && horizontal < 0f || !movingRight && horizontal > 0f)
-        {
-            movingRight = !movingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
+    StopChasingPlayer();
     }
+    //Se il player è in un punto alto in cui il nemico non può raggiungerlo questo aspetta
+        if(Physics2D.Raycast(transform.position, Vector2.up, 5f, playerlayer))
+        {
+            isWait = true;
+            anim.SetBool("isMoving", false);
+            waitPlayer();
+        } 
+        else if(!Physics2D.Raycast(transform.position, Vector2.up, 5f, playerlayer))
+        {
+            isWait = false;
+            anim.SetBool("isMoving", true);
+        }
+        else if(disToPlayer > agroRange && !isWait)
+        {
+        StopChasingPlayer();
+        } 
 
 #endregion
+} 
 
 
+
+#region  Insegue il player
+
+private void  ChasePlayer()
+{
+    anim.SetBool("isRunning", true);
+if(transform.position.x < PlayerMovement.instance.transform.position.x)
+{
+    //Sinistra
+    RB.velocity = new Vector2(runSpeed, 0);
+    movingRight = true;
+    transform.localScale = new Vector2(1, transform.localScale.y);
 }
+else if(transform.position.x > PlayerMovement.instance.transform.position.x)
+{
+    //Destra
+    RB.velocity = new Vector2(-runSpeed, 0);
+    movingRight = false;
+    transform.localScale = new Vector2(-1, transform.localScale.y);
+}
+}
+
+private void StopChasingPlayer()
+{
+    anim.SetBool("isRunning", false);
+    RB.velocity = new Vector2(moveSpeed, 0);
+}
+
+private void waitPlayer()
+{
+    anim.SetBool("isRunning", false);
+    RB.velocity = new Vector2(0, 0);
+}
+
+#endregion
+}
+
+
+
+
+
