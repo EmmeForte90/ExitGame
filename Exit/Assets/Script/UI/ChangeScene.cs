@@ -10,7 +10,7 @@ public class ChangeScene : MonoBehaviour
     public float Timelife;
 
 
-public void SceneLoad()
+void Awake()
 {        
         StartCoroutine(FinishVideo());
 }

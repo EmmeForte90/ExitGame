@@ -75,23 +75,15 @@ public class DogMonster : MonoBehaviour
 
     }
 
-     #region  indicatori engine
-void OnDrawGizmosSelected()
+     void Update()
 {
-     Gizmos.color = Color.white;
-    Gizmos.DrawWireSphere(agroPos.position, agroRange);
-}
-#endregion
-
-
-void Update()
-{
-
 //Calcolo distanza tra player e nemico
 float disToPlayer = Vector2.Distance(transform.position, PlayerMovement.instance.transform.position);
 Debug.DrawRay(transform.position, new Vector2(agroRange, 0), Color.red);
 #region Se il nemico NON sta attaccando...
-if(disToPlayer > agroRange){
+if(!isAttack && disToPlayer > agroRange){
+
+    StopAttack();
 
             if (moveCount > 0)
             //Tempo di pausa per far fermare il nemico
@@ -149,17 +141,19 @@ if(disToPlayer > agroRange){
                 }
                 anim.SetBool("isMoving", false);
             }
-}
+        } 
 #endregion
 
 #region Se il nemico STA ATTACCANDO
 else if(disToPlayer < agroRange && !isWait)
 {          
-    
+    //Se non sta attaccando 
+    if(!isAttack)
+    {
     //Insegue il player
     ChasePlayer();
-    
-    
+    }
+   
 }
 //Altrimenti smettere di inseguirlo
     else if(disToPlayer > agroRange && !isWait)
@@ -167,13 +161,13 @@ else if(disToPlayer < agroRange && !isWait)
     StopChasingPlayer();
     }
     //Se il player è in un punto alto in cui il nemico non può raggiungerlo questo aspetta
-        if(Physics2D.Raycast(transform.position, Vector2.up, 5f, playerlayer))
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), 5f, playerlayer))
         {
             isWait = true;
             anim.SetBool("isMoving", false);
             waitPlayer();
         } 
-        else if(!Physics2D.Raycast(transform.position, Vector2.up, 5f, playerlayer))
+        else if(!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), 5f, playerlayer))
         {
             isWait = false;
             anim.SetBool("isMoving", true);
@@ -186,7 +180,14 @@ else if(disToPlayer < agroRange && !isWait)
 #endregion
 } 
 
-
+#region  indicatori engine
+void OnDrawGizmosSelected()
+{
+     Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(agroPos.position, agroRange);
+    
+}
+#endregion
 
 #region  Insegue il player
 
@@ -211,20 +212,54 @@ else if(transform.position.x > PlayerMovement.instance.transform.position.x)
 
 private void StopChasingPlayer()
 {
+    StopAttack();
     anim.SetBool("isRunning", false);
     RB.velocity = new Vector2(moveSpeed, 0);
 }
 
 private void waitPlayer()
 {
+    StopAttack();
     anim.SetBool("isRunning", false);
     RB.velocity = new Vector2(0, 0);
 }
 
 #endregion
+
+#region  Flippa lo sprite
+private void Flip()
+    {
+        if (movingRight && horizontal < 0f || !movingRight && horizontal > 0f)
+        {
+            movingRight = !movingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
+#endregion
+
+#region  Attacco
+public void Attack()
+    {
+    isAttack = true;
+    RB.velocity = new Vector2(0, 0);
+    anim.SetBool("isMoving", false);
+    anim.SetBool("isAttack", true);
+    }
+
+public void StopAttack()
+    {
+        isAttack = false;
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isRunning", false);
+        moveCount = moveTime;
+
+    }
+
+
+#endregion
+
+
 }
-
-
-
-
-

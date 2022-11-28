@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
 
     public string startScene, continueScene;
+    public float Timelife;
     public GameObject opzioni;
     public GameObject continueButton;
     public AudioMixer audioMixer;
@@ -61,9 +62,8 @@ public void SetResolution(int resolutionIndex)
 
     public void StartGame()
     {
-        SceneManager.LoadScene(startScene);
-
-        PlayerPrefs.DeleteAll();
+        StartCoroutine(fade());
+       
 
     }
 
@@ -97,8 +97,13 @@ public void SetResolution(int resolutionIndex)
         Screen.fullScreen = isFullScreen;
     }
 
+IEnumerator fade()
+    {
+        yield return new WaitForSeconds(Timelife);
+SceneManager.LoadScene(startScene);
 
-
+        PlayerPrefs.DeleteAll();    }
+ 
 
     public void QuitGame()
     {
