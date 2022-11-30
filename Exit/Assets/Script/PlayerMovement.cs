@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] GameObject Player;
+    [SerializeField] public GameObject _player;
     [SerializeField] Transform player;
     public Rigidbody myRigidbody;
     [SerializeField] public LayerMask layerMask;
@@ -26,7 +26,7 @@ void OnCollisionEnter(Collision other)
         {
             platform = true;
             //Debug.Log("Hai tocca la paittaforma" + isGround);
-            if (platform){Player.transform.parent = other.transform;}
+            if (platform){_player.transform.parent = other.transform;}
 		}
 
         
@@ -38,7 +38,7 @@ private void OnCollisionExit(Collision other){
         {
             //Debug.Log("Sei uscito dalla piattaforma");
             platform = false;
-			Player.transform.parent = null;
+			_player.transform.parent = null;
 		}
 	}
 #endregion 

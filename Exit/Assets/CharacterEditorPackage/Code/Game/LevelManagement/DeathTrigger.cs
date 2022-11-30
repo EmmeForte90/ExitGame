@@ -6,7 +6,7 @@ using System.Collections;
 public class DeathTrigger : MonoBehaviour {
 
     [SerializeField] GameObject DieAnm;
-    [SerializeField] GameObject PlayerC;
+    //[SerializeField] GameObject PlayerC;
 
     [SerializeField] public float startDie;
 
@@ -22,7 +22,7 @@ public class DeathTrigger : MonoBehaviour {
             { 
 
                 Instantiate(DieAnm, PlayerMovement.instance.transform.position, transform.rotation);
-                PlayerC.gameObject.SetActive(false);
+                PlayerMovement.instance._player.gameObject.SetActive(false);
                 StartCoroutine(Die());
 
 
@@ -38,7 +38,7 @@ IEnumerator Die()
                 if (InSceneLevelSwitcher.Get())
                 {
                     InSceneLevelSwitcher.Get().Respawn();
-                    PlayerC.gameObject.SetActive(true);
+                PlayerMovement.instance._player.gameObject.SetActive(true);
 
                 }
     }
