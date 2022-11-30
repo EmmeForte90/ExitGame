@@ -18,9 +18,11 @@ public class DogMonster : MonoBehaviour
     
     [Header("Fisica")]
     [SerializeField]
-    protected Rigidbody2D RB;
+    //protected Rigidbody3D RB;
+        protected Rigidbody RB;
+
     [SerializeField ]
-    public float bounceForce = 20f;
+    public float bounceForce = 30f;
     [SerializeField] 
     public float timeHurt = 0.5f;
     [SerializeField ]
@@ -69,7 +71,7 @@ public class DogMonster : MonoBehaviour
         moveCount = moveTime;
         instance = this;
         anim = GetComponent<Animator>();
-        RB = GetComponent<Rigidbody2D>();
+        RB = GetComponent<Rigidbody>();
         HP = MaxHP;
         //HPBarra.SethmaxHP(MaxHP);
 
@@ -78,8 +80,8 @@ public class DogMonster : MonoBehaviour
      void Update()
 {
 //Calcolo distanza tra player e nemico
-float disToPlayer = Vector2.Distance(transform.position, PlayerMovement.instance.transform.position);
-Debug.DrawRay(transform.position, new Vector2(agroRange, 0), Color.red);
+float disToPlayer = Vector3.Distance(transform.position, PlayerMovement.instance.transform.position);
+Debug.DrawRay(transform.position, new Vector3(agroRange, 0), Color.red);
 #region Se il nemico NON sta attaccando...
 if(!isAttack && disToPlayer > agroRange){
 
@@ -94,26 +96,26 @@ if(!isAttack && disToPlayer > agroRange){
                 if (movingRight)
                 //Se si muove a destra
                 {
-                    RB.velocity = new Vector2(moveSpeed, RB.velocity.y);
+                    RB.velocity = new Vector3(moveSpeed, RB.velocity.y);
                     //Un vettore lo fa muovere a destra
                     if (transform.position.x > RP.transform.position.x)
                     //Se la posizione è maggiore del RightPoint
                     {
                         movingRight = false;
                         //Non si muove più a destra
-                        transform.localScale = new Vector2(-1, transform.localScale.y);
+                        transform.localScale = new Vector3(-1, transform.localScale.y, 0);
                         //Si volta dall'altra parte e inizia a muoversi
                     }
                 }
                 else
                 {
-                    RB.velocity = new Vector2(-moveSpeed, RB.velocity.y);
+                    RB.velocity = new Vector3(-moveSpeed, RB.velocity.y);
                     //Il vettore lo fa muovere a sinistra
                     if (transform.position.x < LP.transform.position.x)
                     {
                         movingRight = true;
                         //Si muove a destra
-                        transform.localScale = new Vector2(1, transform.localScale.y);
+                        transform.localScale = new Vector3(1, transform.localScale.y, 0);
                         //Si volta dall'altra parte e inizia a muoversi
                     }
                 }
@@ -121,7 +123,7 @@ if(!isAttack && disToPlayer > agroRange){
                 if (moveCount <= 0)
                 //Se il conteggio del movimento è uguale o inferiore a zero
                 {
-                    waitCount = Random.Range(waitTime * .75f, waitTime * 1.25f);
+                    waitCount = Random.Range(waitTime * .75f, waitTime * 1.35f);
                     //Il tempo di attesa diventa randomico
                 }
 
@@ -131,7 +133,7 @@ if(!isAttack && disToPlayer > agroRange){
             //Se il conteggio del movimento è maggiore di zero
             {
                 waitCount -= Time.deltaTime;
-                RB.velocity = new Vector2(0f, RB.velocity.y);
+                RB.velocity = new Vector3(0f, RB.velocity.y);
                 //Il personaggio si muove
                 if (waitCount <= 0)
                 //Se il conteggio del movimento è uguale o inferiore a zero
@@ -197,16 +199,16 @@ private void  ChasePlayer()
 if(transform.position.x < PlayerMovement.instance.transform.position.x)
 {
     //Sinistra
-    RB.velocity = new Vector2(runSpeed, 0);
+    RB.velocity = new Vector3(runSpeed, 0);
     movingRight = true;
-    transform.localScale = new Vector2(1, transform.localScale.y);
+    transform.localScale = new Vector3(1, transform.localScale.y,  0);
 }
 else if(transform.position.x > PlayerMovement.instance.transform.position.x)
 {
     //Destra
-    RB.velocity = new Vector2(-runSpeed, 0);
+    RB.velocity = new Vector3(-runSpeed, 0, 0);
     movingRight = false;
-    transform.localScale = new Vector2(-1, transform.localScale.y);
+    transform.localScale = new Vector3(-1, transform.localScale.y, 0);
 }
 }
 
@@ -214,14 +216,14 @@ private void StopChasingPlayer()
 {
     StopAttack();
     anim.SetBool("isRunning", false);
-    RB.velocity = new Vector2(moveSpeed, 0);
+    RB.velocity = new Vector3(moveSpeed, 0);
 }
 
 private void waitPlayer()
 {
     StopAttack();
     anim.SetBool("isRunning", false);
-    RB.velocity = new Vector2(0, 0);
+    RB.velocity = new Vector3(0, 0);
 }
 
 #endregion
@@ -244,7 +246,7 @@ private void Flip()
 public void Attack()
     {
     isAttack = true;
-    RB.velocity = new Vector2(0, 0);
+    RB.velocity = new Vector3(0, 0);
     anim.SetBool("isMoving", false);
     anim.SetBool("isAttack", true);
     }
