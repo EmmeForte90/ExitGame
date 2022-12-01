@@ -35,7 +35,7 @@ public class InSceneLevelSwitcher : MonoBehaviour {
         CorrectCamera();
 	}
 
-    /*void OnGUI()
+    void OnGUI()
     {
         for (int i = 0; i < m_Levels.Length; i ++)
         {
@@ -51,7 +51,7 @@ public class InSceneLevelSwitcher : MonoBehaviour {
                 CorrectCamera();
             }
         }
-    }*/
+    }
 
     void Update()
     {
