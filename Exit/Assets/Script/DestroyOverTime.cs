@@ -6,7 +6,7 @@ public class DestroyOverTime : MonoBehaviour
 {
     [Header("Tempo di esplosione")]
     [SerializeField] public float lifeTime;
-    [SerializeField] public float startFade;
+    float startFade = 1f;
     [SerializeField] GameObject FadeAnm;
 
     void Update()

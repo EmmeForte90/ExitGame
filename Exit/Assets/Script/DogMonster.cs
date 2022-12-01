@@ -77,12 +77,19 @@ public class DogMonster : MonoBehaviour
 
     }
 
-     void Update()
-{
+     void Update(){
 //Calcolo distanza tra player e nemico
 float disToPlayer = Vector3.Distance(transform.position, PlayerMovement.instance.transform.position);
 Debug.DrawRay(transform.position, new Vector3(agroRange, 0), Color.red);
 #region Se il nemico NON sta attaccando...
+if(PlayerMovement.instance.death)
+{
+            waitPlayer();
+
+}
+else if(!PlayerMovement.instance.death){
+
+
 if(!isAttack && disToPlayer > agroRange){
 
     StopAttack();
@@ -181,6 +188,7 @@ else if(disToPlayer < agroRange && !isWait)
 
 #endregion
 } 
+     }
 
 #region  indicatori engine
 void OnDrawGizmosSelected()
@@ -223,6 +231,7 @@ private void waitPlayer()
 {
     StopAttack();
     anim.SetBool("isRunning", false);
+    anim.SetBool("isMoving", false);
     RB.velocity = new Vector3(0, 0);
 }
 

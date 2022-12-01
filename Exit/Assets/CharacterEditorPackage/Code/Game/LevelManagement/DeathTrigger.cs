@@ -5,10 +5,11 @@ using System.Collections;
 //--------------------------------------------------------------------
 public class DeathTrigger : MonoBehaviour {
 
-    [SerializeField] GameObject DieAnm;
+    
+
     //[SerializeField] GameObject PlayerC;
 
-    [SerializeField] public float startDie;
+    float startDie = 3f;
 
 
 
@@ -21,8 +22,9 @@ public class DeathTrigger : MonoBehaviour {
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
 
-                Instantiate(DieAnm, PlayerMovement.instance.transform.position, transform.rotation);
+                Instantiate(PlayerMovement.instance.DieAnm, PlayerMovement.instance.transform.position, transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(false);
+                PlayerMovement.instance.death = true;
                 StartCoroutine(Die());
 
 
@@ -38,6 +40,8 @@ IEnumerator Die()
                 if (InSceneLevelSwitcher.Get())
                 {
                     InSceneLevelSwitcher.Get().Respawn();
+                    PlayerMovement.instance.death = false;
+                Instantiate(PlayerMovement.instance._fade, PlayerMovement.instance.transform.position, transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(true);
 
                 }
