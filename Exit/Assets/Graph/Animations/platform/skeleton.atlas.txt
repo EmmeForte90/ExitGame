@@ -1,0 +1,8 @@
+skeleton.png
+size:512,128
+filter:Linear,Linear
+pma:true
+Livello 2
+bounds:2,2,352,80
+asd copia 2
+bounds:356,8,74,74
