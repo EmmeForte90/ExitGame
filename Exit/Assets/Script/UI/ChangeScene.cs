@@ -7,13 +7,24 @@ using UnityEngine.UI;
 public class ChangeScene : MonoBehaviour
 {
     public string startScene;
+    public string levelToLoad;
     public float Timelife;
+
 
 
 void Awake()
 {        
         StartCoroutine(FinishVideo());
 }
+
+public void changeScene()
+{
+    SceneManager.LoadScene(startScene);
+    PlayerPrefs.SetString("ContinueLevel", levelToLoad);
+
+
+}
+
 
     IEnumerator FinishVideo()
     {
