@@ -4,49 +4,56 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
 
-    public AudioManager theAM;
+    //public AudioManager theAM;
+    [SerializeField] public GameObject theAM;
+
 
     [Header("Music")]
-    [SerializeField] public AudioSource bgm;
+    [SerializeField] public AudioSource[] bgm;
     //[SerializeField] public AudioSource[] soundEffects;
+ 
+ 
+ public static AudioManager instance { get; private set; }
 
-    private void Awake()
-    {
-        if(AudioManager.instance == null)
-        {
-            //AudioManager newAM = Instantiate(theAM);
-            //AudioManager.instance = newAM;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }
 
+private void Awake() 
+{ 
+    // If there is an instance, and it's not me, delete myself.
     
+    if (instance != null && instance != this) 
+    { 
+        Destroy(this); 
+    } 
+    else 
+    { 
+        instance = this; 
+    } 
+}
+
+   
 
 
 
-/*
+
 #region Sound 
-    public void PlaySFX(int soundToPlay)
+    public void PlayMFX(int soundToPlay)
     {
-        soundEffects[soundToPlay].Stop();
-        soundEffects[soundToPlay].pitch = Random.Range(.9f, 1.1f);
-        soundEffects[soundToPlay].Play();
+        bgm[soundToPlay].Stop();
+        bgm[soundToPlay].pitch = Random.Range(.9f, 1.1f);
+        bgm[soundToPlay].Play();
     }
 
-    public void StopSFX(int soundToPlay)
+    public void StopMFX(int soundToPlay)
     {
-        soundEffects[soundToPlay].Stop();
+        bgm[soundToPlay].Stop();
     }
 #endregion
 
+/*
 #region Music
 
-    public void stopMusic()
-    {
-        bgm.Stop();
-    }
+    
      public void playMusic()
     {
         bgm.Play();
