@@ -8,17 +8,23 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
 
-    public string startScene, continueScene;
+    public GameObject continueButton;
+    public string startScene;
     public float Timelife;
     public GameObject opzioni;
-    public GameObject continueButton;
     public AudioMixer audioMixer;
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
+    //public PlayerAbilityTracker player;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(PlayerPrefs.HasKey("ContinueLevel"))
+        {
+            continueButton.SetActive(true);
+        }
+
         resolutions = Screen.resolutions;
 
         List<string> options = new List<string>();
@@ -35,7 +41,7 @@ public class MainMenu : MonoBehaviour
 
         }
 
-        resolutionDropdown.ClearOptions();
+//        resolutionDropdown.ClearOptions();
         resolutionDropdown.value = currentResolutionIndex;
         //resolutionDropdown.RefreshValue();
         resolutionDropdown.AddOptions(options);
@@ -53,6 +59,14 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void Continue()
+    {
+        //player.gameObject.SetActive(true);
+        //PlayerMovement.instance.transform.position = new Vector3(PlayerPrefs.GetFloat("PosX"), PlayerPrefs.GetFloat("PosY"), PlayerPrefs.GetFloat("PosZ"));
+        StartCoroutine(fadeCont());
+
+    }
+
 public void SetResolution(int resolutionIndex)
 {
     Resolution resolution = resolutions[resolutionIndex];
@@ -67,10 +81,6 @@ public void SetResolution(int resolutionIndex)
 
     }
 
-    public void ContinueGame()
-    {
-        SceneManager.LoadScene(continueScene);
-    }
 
     public void Options()
     {
@@ -99,10 +109,23 @@ public void SetResolution(int resolutionIndex)
 
 IEnumerator fade()
     {
+        
+        PlayerPrefs.DeleteAll();
         yield return new WaitForSeconds(Timelife);
-SceneManager.LoadScene(startScene);
+        SceneManager.LoadScene(startScene);
 
-        PlayerPrefs.DeleteAll();    }
+            
+    }
+
+    IEnumerator fadeCont()
+    {
+        
+        yield return new WaitForSeconds(Timelife);
+        SceneManager.LoadScene(PlayerPrefs.GetString("ContinueLevel"));
+
+
+            
+    }
  
 
     public void QuitGame()

@@ -6,14 +6,24 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
+    public AudioManager theAM;
+    
     [Header("Music")]
     [SerializeField] public AudioSource bgm, dieMusic;
     [SerializeField] public AudioSource[] soundEffects;
 
     private void Awake()
     {
-        instance = this;
+        if(AudioManager.instance == null)
+        {
+            AudioManager newAM = Instantiate(theAM);
+            AudioManager.instance = newAM;
+            DontDestroyOnLoad(newAM.gameObject);
+        }
     }
+
+    
+
 
 
 

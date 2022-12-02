@@ -7,19 +7,44 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public GameObject _player;
     [SerializeField] public GameObject _fade;
     [SerializeField] public GameObject DieAnm;
+    [SerializeField] public GameObject pause;
     [SerializeField] Transform player;
     public Rigidbody myRigidbody;
     [SerializeField] public LayerMask layerMask;
     public bool death = false;
-bool platform = false;
+    public bool buttonPress = false;
+
+    bool platform = false;
     public static PlayerMovement instance;
+
+
      void Awake()
     {
         instance = this;
 
     }
         
-           
+          
+
+    void Update()
+    {
+    if (Input.GetKeyDown(KeyCode.Escape) && !buttonPress)
+        {
+            Debug.Log("Escape key was pressed");
+            Time.timeScale = 0;
+            buttonPress = true;
+            pause.gameObject.SetActive(true);
+
+        } else if (Input.GetKeyDown(KeyCode.Escape) && buttonPress)
+        {
+            Debug.Log("Escape key was pressed");
+            Time.timeScale = 1;
+            buttonPress = false;
+            pause.gameObject.SetActive(false);
+
+        }
+    }
+
 #region Collisioni
 
 void OnCollisionEnter(Collision other)
