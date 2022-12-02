@@ -7,18 +7,18 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     public AudioManager theAM;
-    
+
     [Header("Music")]
-    [SerializeField] public AudioSource bgm, dieMusic;
-    [SerializeField] public AudioSource[] soundEffects;
+    [SerializeField] public AudioSource bgm;
+    //[SerializeField] public AudioSource[] soundEffects;
 
     private void Awake()
     {
         if(AudioManager.instance == null)
         {
-            AudioManager newAM = Instantiate(theAM);
-            AudioManager.instance = newAM;
-            DontDestroyOnLoad(newAM.gameObject);
+            //AudioManager newAM = Instantiate(theAM);
+            //AudioManager.instance = newAM;
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 
@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
 
 
 
-
+/*
 #region Sound 
     public void PlaySFX(int soundToPlay)
     {
@@ -59,5 +59,5 @@ public class AudioManager : MonoBehaviour
     }
     
 
-    #endregion
+    #endregion*/
 }
