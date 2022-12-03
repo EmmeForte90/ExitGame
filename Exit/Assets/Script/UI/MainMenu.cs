@@ -97,6 +97,13 @@ public void SetResolution(int resolutionIndex)
 
     }
 
+
+     public void SetSFX(float volume)
+    {
+        audioMixer.SetFloat("SFX", volume);
+
+    }
+
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);

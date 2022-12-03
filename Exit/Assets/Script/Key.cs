@@ -6,6 +6,11 @@ using UnityEngine.Events;
 
 public class Key : MonoBehaviour
 {
+
+        [SerializeField] public GameObject boof;
+        [SerializeField] public GameObject key;
+
+
     [SerializeField]
     private string _colliderScript;
 
@@ -14,6 +19,8 @@ public class Key : MonoBehaviour
 
       [SerializeField]
       private UnityEvent _colissionExit;
+
+
 
      
       void OnTriggerEnter(Collider a_Collider)
@@ -25,6 +32,9 @@ public class Key : MonoBehaviour
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
             _colissionEntered?.Invoke();
+            Instantiate(boof, boof.transform.position, boof.transform.rotation);
+            key.gameObject.SetActive(false);
+
 
             }
         }
@@ -39,6 +49,10 @@ public class Key : MonoBehaviour
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
             _colissionExit?.Invoke();
+            Instantiate(boof, boof.transform.position, boof.transform.rotation);
+            key.gameObject.SetActive(false);
+
+
 
             }
         }

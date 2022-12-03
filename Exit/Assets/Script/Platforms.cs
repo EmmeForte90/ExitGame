@@ -9,7 +9,20 @@ public Transform[] points;
     [SerializeField]  float moveSpeed;
     [SerializeField]  int currentPoint;
     [SerializeField]  Transform platform;
+    [SerializeField]  bool saw = false;
+    
+    [Header("Sound")]
+        public AudioClip sfx_Platform;
+        public AudioClip sfx_Saw;
+        
+        [HideInInspector]
+        public AudioSource audioS;
 
+ private void Awake()
+        {
+            
+            audioS = GetComponent<AudioSource>();
+        }
     // Update is called once per frame
     void Update()
     {
@@ -25,6 +38,14 @@ public Transform[] points;
             {
                 currentPoint = 0;
 
+            }
+
+            if(saw)
+            {
+            audioS.PlayOneShot(sfx_Saw);
+            } else if(!saw)
+            {
+            audioS.PlayOneShot(sfx_Platform);
             }
 
         }

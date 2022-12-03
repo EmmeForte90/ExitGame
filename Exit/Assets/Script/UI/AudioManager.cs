@@ -11,32 +11,36 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] public AudioSource[] bgm;
-    //[SerializeField] public AudioSource[] soundEffects;
  
  
  public static AudioManager instance { get; private set; }
-
+// Game Instance Singleton
+     public static AudioManager Instance
+     {
+         get
+         { 
+             return instance; 
+         }
+     }
 
 private void Awake() 
 { 
-    // If there is an instance, and it's not me, delete myself.
-    
-    if (instance != null && instance != this) 
-    { 
-        Destroy(this); 
-    } 
-    else 
-    { 
-        instance = this; 
-    } 
+    // if the singleton hasn't been initialized yet
+         if (instance != null && instance != this) 
+         {
+             Destroy(this.gameObject);
+         }
+ 
+         instance = this;
+         DontDestroyOnLoad( this.gameObject );
 }
 
    
 
 
 
+#region Music
 
-#region Sound 
     public void PlayMFX(int soundToPlay)
     {
         bgm[soundToPlay].Stop();

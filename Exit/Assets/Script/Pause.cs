@@ -17,6 +17,9 @@ public void Resume()
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        AudioManager.instance.StopMFX(1);
+        AudioManager.instance.StopMFX(2);
+        AudioManager.instance.PlayMFX(0);
         Time.timeScale = 1;
 
     }
@@ -32,6 +35,12 @@ public void Resume()
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("Volume", volume);
+
+    }
+
+     public void SetSFX(float volume)
+    {
+        audioMixer.SetFloat("SFX", volume);
 
     }
 
