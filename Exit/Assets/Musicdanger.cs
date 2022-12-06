@@ -6,14 +6,14 @@ using UnityEngine.Events;
 
 public class Musicdanger : MonoBehaviour
 {
-    [SerializeField]
+    /*[SerializeField]
     private string _colliderScript;
 
      [SerializeField]
      private UnityEvent _colissionEntered;
 
       [SerializeField]
-      private UnityEvent _colissionExit;
+      private UnityEvent _colissionExit;*/
 
      
       void OnTriggerEnter(Collider a_Collider)
@@ -24,8 +24,11 @@ public class Musicdanger : MonoBehaviour
             //Prevent death state to be used if the collider is no-clipping
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
-            _colissionEntered?.Invoke();
+            //_colissionEntered?.Invoke();
+            AudioManager.instance.StopMFX(0);
+            AudioManager.instance.StopMFX(1);
             AudioManager.instance.PlayMFX(2);
+            DogMonster.instance.sfxM = true;
 
 
             }
@@ -40,8 +43,14 @@ public class Musicdanger : MonoBehaviour
             //Prevent death state to be used if the collider is no-clipping
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
-            _colissionExit?.Invoke();
+            //_colissionExit?.Invoke();
+            AudioManager.instance.StopMFX(0);
+            AudioManager.instance.StopMFX(2);
             AudioManager.instance.PlayMFX(1);
+            AudioManager.instance.StopSFX(8);
+            AudioManager.instance.StopSFX(7);
+            DogMonster.instance.sfxM = false;
+
 
             }
         }

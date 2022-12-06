@@ -12,7 +12,9 @@ public class MainMenu : MonoBehaviour
     public string startScene;
     public float Timelife;
     public GameObject opzioni;
-    public AudioMixer audioMixer;
+    public AudioMixer MSX;
+    public AudioMixer SFX;
+
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
     //public PlayerAbilityTracker player;
@@ -93,14 +95,14 @@ public void SetResolution(int resolutionIndex)
 
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        MSX.SetFloat("Volume", volume);
 
     }
 
 
      public void SetSFX(float volume)
     {
-        audioMixer.SetFloat("SFX", volume);
+        SFX.SetFloat("Volume", volume);
 
     }
 
@@ -129,6 +131,8 @@ IEnumerator fade()
         
         yield return new WaitForSeconds(Timelife);
         SceneManager.LoadScene(PlayerPrefs.GetString("ContinueLevel"));
+        AudioManager.instance.PlayMFX(1);
+
 
 
             

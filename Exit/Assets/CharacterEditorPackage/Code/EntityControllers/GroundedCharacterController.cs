@@ -196,6 +196,9 @@ public class GroundedCharacterController : CharacterControllerBase
 
     public void Jump(Vector2 a_Velocity, bool a_OverridePreviousVelocity = true, bool a_AllowLowJumps = true, bool a_ConsumeJumpInput = true)
     {
+
+        AudioManager.instance.PlaySFX(3);
+
         if (a_AllowLowJumps)
         {
             m_JumpCutPossible = true;
@@ -435,10 +438,12 @@ public class GroundedCharacterController : CharacterControllerBase
             {
                 if (m_ControlledCollider.GetGroundedInfo().IsDangling())
                 {
+                    AudioManager.instance.StopSFX(4);
                     return "Dangling";
                 }
                 else
                 { 
+                    AudioManager.instance.StopSFX(4);
                     return "Idle";
                 }
             }

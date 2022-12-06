@@ -32,8 +32,10 @@ public class Key : MonoBehaviour
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
             _colissionEntered?.Invoke();
-            Instantiate(boof, boof.transform.position, boof.transform.rotation);
+            Instantiate(boof, key.transform.position, key.transform.rotation);
             key.gameObject.SetActive(false);
+                AudioManager.instance.PlaySFX(2);
+
 
 
             }

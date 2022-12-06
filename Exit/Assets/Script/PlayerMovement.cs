@@ -67,7 +67,14 @@ void OnCollisionEnter(Collision other)
         
 	}
 
-    
+    private void  WalkSound()
+{
+  AudioManager.instance.PlaySFX(4);
+}
+
+
+
+
 private void OnCollisionExit(Collision other){
 	if (other.gameObject.tag == "Platforms")
         {

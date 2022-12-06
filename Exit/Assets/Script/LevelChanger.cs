@@ -10,6 +10,8 @@ public class LevelChanger : MonoBehaviour
     public Transform exitPoint;
     public string levelToLoad;
     public string sLevelToLoad;
+    //public AudioClip MusicTrack;
+
     [SerializeField]
     private string _colliderScript;
 
@@ -39,6 +41,7 @@ public class LevelChanger : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(sLevelToLoad);
         PlayerPrefs.SetString("ContinueLevel", levelToLoad);
+
         //PlayerPrefs.SetFloat("PosX", exitPoint.position.x);
         //PlayerPrefs.SetFloat("PosY", exitPoint.position.y);
         //PlayerPrefs.SetFloat("PosZ", exitPoint.position.z);

@@ -11,6 +11,10 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] public AudioSource[] bgm;
+        [Header("Sound")]
+
+        [SerializeField] public AudioSource[] sound;
+
  
  
  public static AudioManager instance { get; private set; }
@@ -51,6 +55,21 @@ private void Awake()
     public void StopMFX(int soundToPlay)
     {
         bgm[soundToPlay].Stop();
+    }
+#endregion
+
+#region sound
+
+    public void PlaySFX(int soundToPlay)
+    {
+        //sound[soundToPlay].Stop();
+        //sound[soundToPlay].pitch = Random.Range(.9f, 1.1f);
+        sound[soundToPlay].Play();
+    }
+
+    public void StopSFX(int soundToPlay)
+    {
+        sound[soundToPlay].Stop();
     }
 #endregion
 

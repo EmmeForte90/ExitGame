@@ -28,6 +28,7 @@ public class DogMonster : MonoBehaviour
     [SerializeField ]
     public Transform Enemy;
     [HideInInspector] public bool isWait = false;
+    [HideInInspector] public bool sfxM = false;
 
 
     [Header("Tempo di movimento")]
@@ -161,6 +162,7 @@ else if(disToPlayer < agroRange && !isWait)
     {
     //Insegue il player
     ChasePlayer();
+    
     }
    
 }
@@ -199,13 +201,25 @@ void OnDrawGizmosSelected()
 }
 #endregion
 
+private void  IdleSound()
+{
+  AudioManager.instance.PlaySFX(7);
+}
+
+private void  AgroSound()
+{
+  AudioManager.instance.PlaySFX(8);
+}
+
 #region  Insegue il player
 
 private void  ChasePlayer()
 {
+   
     anim.SetBool("isRunning", true);
 if(transform.position.x < PlayerMovement.instance.transform.position.x)
 {
+  
     //Sinistra
     RB.velocity = new Vector3(runSpeed, 0);
     movingRight = true;
@@ -214,6 +228,7 @@ if(transform.position.x < PlayerMovement.instance.transform.position.x)
 else if(transform.position.x > PlayerMovement.instance.transform.position.x)
 {
     //Destra
+    
     RB.velocity = new Vector3(-runSpeed, 0, 0);
     movingRight = false;
     transform.localScale = new Vector3(-1, transform.localScale.y, 0);
@@ -222,6 +237,8 @@ else if(transform.position.x > PlayerMovement.instance.transform.position.x)
 
 private void StopChasingPlayer()
 {
+        
+
     StopAttack();
     anim.SetBool("isRunning", false);
     RB.velocity = new Vector3(moveSpeed, 0);

@@ -126,6 +126,8 @@ public abstract class CharacterControllerBase : MonoBehaviour
         if (a_PlayerInput.GetDirectionInput("Move") != null)
         {
             m_MovementInput = a_PlayerInput.GetDirectionInput("Move");
+            
+
         }
         else
         {
