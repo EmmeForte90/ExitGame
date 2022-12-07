@@ -32,7 +32,7 @@ public static BatMonster instance;
 	public Transform[] points;
     public int currentPoint;
     public Transform platform;
-        private float horizontal;
+    private float horizontal;
 
 
     [Header("Shooting")]
@@ -146,7 +146,6 @@ public static BatMonster instance;
 					//Repeting shooter
 					var newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
 					Instantiate(blam, firePoint.position, firePoint.rotation);
-					//AudioManager.instance.PlaySFX(4);
 					anim.SetBool("isAttack", isAttack);
 					anim.SetTrigger("isShoot");
 					newBullet.transform.localScale = Enemy.localScale;
@@ -179,5 +178,6 @@ void OnDrawGizmosSelected()
     Gizmos.DrawWireSphere(attackPos.position, targetRange);
 }
 #endregion
+
 
 }

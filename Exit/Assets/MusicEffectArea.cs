@@ -14,6 +14,40 @@ public class MusicEffectArea : MonoBehaviour
       private UnityEvent _colissionExit;*/
 
          [SerializeField]  bool saw = false;
+         [SerializeField] public AudioSource bgmS;
+        [SerializeField] public AudioSource bgmP;
+
+public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
+    {
+        float startVolume = bgm.volume;
+ 
+        while (bgm.volume > 0)
+        {
+            bgm.volume -= startVolume * Time.deltaTime / FadeTime;
+ 
+            yield return null;
+        }
+ 
+        bgm.Stop();
+        bgm.volume = startVolume;
+    }
+ 
+    public  IEnumerator FadeIn(AudioSource bgm, float FadeTime)
+    {
+        float startVolume = 0.2f;
+ 
+        bgm.volume = 0;
+        bgm.Play();
+ 
+        while (bgm.volume < 1.0f)
+        {
+            bgm.volume += startVolume * Time.deltaTime / FadeTime;
+ 
+            yield return null;
+        }
+ 
+        bgm.volume = 0.3f;
+    }
 
       void OnTriggerEnter(Collider a_Collider)
     {
@@ -23,15 +57,14 @@ public class MusicEffectArea : MonoBehaviour
             //Prevent death state to be used if the collider is no-clipping
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
-                            AudioManager.instance.StopMFX(0);
 
             //_colissionEntered?.Invoke();
              if(saw)
             {
-            AudioManager.instance.PlaySFX(5);
+             StartCoroutine(FadeIn(bgmS, 1f));
             } else if(!saw)
             {
-            AudioManager.instance.PlaySFX(6);
+             StartCoroutine(FadeIn(bgmP, 1f));
             }
 
 
@@ -47,10 +80,10 @@ public class MusicEffectArea : MonoBehaviour
             //Prevent death state to be used if the collider is no-clipping
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
-            //_colissionExit?.Invoke();
-            AudioManager.instance.StopMFX(0);
-            AudioManager.instance.StopSFX(6);
-            AudioManager.instance.StopSFX(5);
+                         StartCoroutine(FadeOut(bgmS, 1f));
+                        StartCoroutine(FadeOut(bgmP, 1f));
+
+
 
 
             }

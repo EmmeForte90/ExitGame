@@ -438,12 +438,10 @@ public class GroundedCharacterController : CharacterControllerBase
             {
                 if (m_ControlledCollider.GetGroundedInfo().IsDangling())
                 {
-                    AudioManager.instance.StopSFX(4);
                     return "Dangling";
                 }
                 else
                 { 
-                    AudioManager.instance.StopSFX(4);
                     return "Idle";
                 }
             }

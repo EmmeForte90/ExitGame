@@ -8,11 +8,15 @@ public class DestroyOverTime : MonoBehaviour
     [SerializeField] public float lifeTime;
     float startFade = 1f;
     [SerializeField] GameObject FadeAnm;
+    [SerializeField] bool needFade = true;
 
     void Update()
     {
         Destroy(gameObject, lifeTime);
+        if(needFade)
+        {
         StartCoroutine(Fade());
+        }
         
     }
 

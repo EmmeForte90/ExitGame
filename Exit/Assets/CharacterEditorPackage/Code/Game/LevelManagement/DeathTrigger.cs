@@ -9,7 +9,7 @@ public class DeathTrigger : MonoBehaviour {
 
     //[SerializeField] GameObject PlayerC;
 
-    float startDie = 3f;
+    float startDie = 2f;
 
 
 

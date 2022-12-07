@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+
 
     //public AudioManager theAM;
     [SerializeField] public GameObject theAM;
@@ -11,6 +13,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] public AudioSource[] bgm;
+
         [Header("Sound")]
 
         [SerializeField] public AudioSource[] sound;
@@ -42,7 +45,6 @@ private void Awake()
    
 
 
-
 #region Music
 
     public void PlayMFX(int soundToPlay)
@@ -55,7 +57,12 @@ private void Awake()
     public void StopMFX(int soundToPlay)
     {
         bgm[soundToPlay].Stop();
+
     }
+
+
+
+
 #endregion
 
 #region sound
@@ -73,21 +80,5 @@ private void Awake()
     }
 #endregion
 
-/*
-#region Music
-
-    
-     public void playMusic()
-    {
-        bgm.Play();
-    }
-    
-    public void DieMusic()
-    {
-        bgm.Stop();
-        dieMusic.Play();
-    }
-    
-
-    #endregion*/
 }
+
