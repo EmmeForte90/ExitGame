@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FallPlatform : MonoBehaviour
 {
-	[Header("GameObject e Target")]
+		[Header("GameObject e Target")]
 	public Transform thePlatform, slammerTarget, slammerPoint, slammerReset; 
     private Vector3 startPoint;
     public float slamSpeed, waitAfterSlam, resetSpeed;
@@ -22,43 +22,39 @@ public class FallPlatform : MonoBehaviour
 		timerValue = waitFall;
 
     }
+#region  indicatori engine
+void OnDrawGizmosSelected()
+{
+     Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(slammerReset.position, agroRange);
+    
+}
+#endregion
 
     void Update()
     {
 #region Targetizzazione
         //Se non sta attaccando
-        Debug.DrawRay(transform.position, new Vector2(0, agroRange), Color.red);
-        Debug.DrawRay(transform.position, new Vector2(agroRange, 0), Color.blue);
-       /* float disToPlayer = Vector2.Distance(transform.position, PlayerMovement.instance.transform.position);
+
+        float disToPlayer = Vector2.Distance(transform.position, PlayerMovement.instance.transform.position);
+
         if(disToPlayer < agroRange)
         {
             if (!slamming && !resetting)
         {
             StartCoroutine(UpdateTimer());
-			//UpdateTimer();
+			
         }
-        }*/
-       /* if (!slamming && !resetting)
-        {
-            if (Vector3.Distance(slammerPoint.position, PlayerMovement.instance.transform.position) < 3f)
-            {
-				UpdateTimer();
-                
-            }
         }
-
-        */
-        //Se sta attaccando
+       
         if (slamming)
         {
             thePlatform.position = Vector3.MoveTowards(thePlatform.position, slammerTarget.position, slamSpeed * Time.deltaTime);
-            //corda.position = Vector3.MoveTowards(corda.position, cordatarget.position, slamSpeed * Time.deltaTime);
 
 
             //Quando colpisce l'area designata
             if (thePlatform.position == slammerTarget.position)
             {
-               // CameraShake.Shake(0.10f, 0.50f);
 
                 waitCounter -= Time.deltaTime;
                 if (waitCounter <= 0)
@@ -73,7 +69,6 @@ public class FallPlatform : MonoBehaviour
         if (resetting)
         {
             thePlatform.position = Vector3.MoveTowards(thePlatform.position, slammerReset.position, resetSpeed * Time.deltaTime);
-            //corda.position = Vector3.MoveTowards(corda.position, startPoint, cordaresetspeed * Time.deltaTime);
 
             if (thePlatform.position == slammerReset.position)
             {
