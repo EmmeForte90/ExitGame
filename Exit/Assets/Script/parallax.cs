@@ -18,11 +18,9 @@ public class parallax : MonoBehaviour
 	public float speed_3;
 	public int distance_3;
 	
-	public SkeletonAnimation skeletonAnimation;
     // Start is called before the first frame update
     void Start()
     {
-        skeletonAnimation = GetComponent<SkeletonAnimation>();
     }
 
     // Update is called once per frame
