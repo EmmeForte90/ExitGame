@@ -9,7 +9,8 @@ public class ChangeColor : MonoBehaviour
     [SerializeField] GameObject eff;
     [SerializeField] GameObject Coll;
 
-
+[Header("Sound")]
+    [SerializeField] public AudioSource glitchS;
     [SerializeField] bool Blu;
 
 
@@ -19,27 +20,29 @@ public class ChangeColor : MonoBehaviour
         {
             B.SetActive(false);
             Instantiate(eff, B.transform.position, B.transform.rotation);
+            glitchS.Play();
             R.SetActive(true);
             Blu = false;
         }else if(Input.GetKeyDown(KeyCode.LeftShift) && !Blu)
         {
             B.SetActive(true);
             Instantiate(eff, R.transform.position, R.transform.rotation);
+            glitchS.Play();
             R.SetActive(false);
             Blu = true;
 
         }
 
-if (PlayerMovement.instance.Blu && Blu)
+if (Blu)
         {
             Coll.SetActive(true);
 		}
-        else if (PlayerMovement.instance.Blu && !Blu)
+        else if (!Blu)
         {
             Coll.SetActive(false);
 		}
 
-
+/*
 if (!PlayerMovement.instance.Blu && Blu)
         {
             Coll.SetActive(false);
@@ -48,11 +51,13 @@ if (!PlayerMovement.instance.Blu && Blu)
         {
             Coll.SetActive(true);
 		}
+*/
 
+    }
 
     }
 
-    }
+
 
 
 

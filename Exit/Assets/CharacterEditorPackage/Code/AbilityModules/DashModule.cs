@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity.AttachmentTools;
+using Spine.Unity;
+using Spine;
 //--------------------------------------------------------------------
 //Dash module is a movement ability
 //--------------------------------------------------------------------
@@ -12,6 +15,12 @@ public class DashModule : GroundedControllerAbilityModule
     [SerializeField] bool m_ResetDashsAfterTouchingWall = false;
     [SerializeField] bool m_ResetDashsAfterTouchingEdge = false;
     [SerializeField] bool m_OverridePreviousSpeed = false;
+    [SerializeField] public GameObject eff;
+
+[Header("Sound")]
+    [SerializeField] public AudioSource glitchS;
+        
+
 
     float m_LastDashTime;
     bool m_HasDashedAndNotTouchedGroundYet;
@@ -26,6 +35,10 @@ public class DashModule : GroundedControllerAbilityModule
     protected override void StartModuleImpl(){
         m_LastDashTime = Time.fixedTime;
         m_HasDashedAndNotTouchedGroundYet = true;
+        Instantiate(eff, PlayerMovement.instance.transform.position, PlayerMovement.instance.transform.rotation);
+        glitchS.Play();
+
+
     }
 
     //Execute jump (lasts one update)
@@ -61,6 +74,7 @@ public class DashModule : GroundedControllerAbilityModule
         if (Time.fixedTime - m_LastDashTime < m_DashCooldown || m_HasDashedAndNotTouchedGroundYet || !GetDirInput("Aim").HasSurpassedThreshold())
         {
             return false;
+
         }
         return true;
     }
@@ -68,6 +82,7 @@ public class DashModule : GroundedControllerAbilityModule
     //Called every frame when inactive (to see if it could be) and when active (to see if it should not be)
     public override bool IsApplicable()
     {
+
         if (Time.fixedTime - m_LastDashTime < m_DashCooldown || m_HasDashedAndNotTouchedGroundYet)
         {
             return false;
@@ -83,4 +98,6 @@ public class DashModule : GroundedControllerAbilityModule
         }
         return false;
     }
+
+    
 }

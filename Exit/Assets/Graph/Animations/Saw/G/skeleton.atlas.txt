@@ -1,6 +1,8 @@
 skeleton.png
-size:1024,1024
+size:2048,1024
 filter:Linear,Linear
 pma:true
 saw
 bounds:2,2,1000,1000
+saw1
+bounds:1004,2,1000,1000

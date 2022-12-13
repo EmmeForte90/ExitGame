@@ -1,0 +1,46 @@
+skeleton.png
+size:2048,256
+filter:Linear,Linear
+pma:true
+Glitch chroma _ you 108
+bounds:2,2,200,113
+rotate:90
+Glitch chroma _ you 109
+bounds:117,2,200,113
+rotate:90
+Glitch chroma _ you 110
+bounds:232,2,200,113
+rotate:90
+Glitch chroma _ you 111
+bounds:347,2,200,113
+rotate:90
+Glitch chroma _ you 112
+bounds:462,2,200,113
+rotate:90
+Glitch chroma _ you 113
+bounds:577,2,200,113
+rotate:90
+Glitch chroma _ you 114
+bounds:692,2,200,113
+rotate:90
+Glitch chroma _ you 115
+bounds:807,2,200,113
+rotate:90
+Glitch chroma _ you 116
+bounds:922,2,200,113
+rotate:90
+Glitch chroma _ you 120
+bounds:922,2,200,113
+rotate:90
+Glitch chroma _ you 117
+bounds:1037,2,200,113
+rotate:90
+Glitch chroma _ you 118
+bounds:1152,2,200,113
+rotate:90
+Glitch chroma _ you 119
+bounds:1267,2,200,113
+rotate:90
+Glitch chroma _ you 121
+bounds:1382,2,200,113
+rotate:90

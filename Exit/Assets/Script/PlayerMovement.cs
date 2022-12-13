@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             pause.gameObject.SetActive(false);
 
         }
-
+/*
         if(Input.GetKeyDown(KeyCode.LeftShift) && Blu)
         {
 
@@ -85,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
             Blu = true;
 
         }
+        */
     }
     
 

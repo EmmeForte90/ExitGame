@@ -9,6 +9,8 @@ public class DestroyOverTime : MonoBehaviour
     float startFade = 1f;
     [SerializeField] GameObject FadeAnm;
     [SerializeField] bool needFade = true;
+[Header("Sound")]
+    [SerializeField] public AudioSource glitchS;
 
     void Update()
     {
@@ -19,6 +21,11 @@ public class DestroyOverTime : MonoBehaviour
         }
         
     }
+
+ public void  GlitchS()
+{
+                glitchS.Play();
+}
 
     IEnumerator Fade()
     {  
