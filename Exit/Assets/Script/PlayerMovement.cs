@@ -20,12 +20,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform player;
     public Rigidbody myRigidbody;
     [SerializeField] public LayerMask layerMask;
-     [HideInInspector] public bool death = false;
-     [HideInInspector] public bool buttonPress = false;
-    bool Blu;
+    [HideInInspector] public bool death = false;
+    [HideInInspector] public bool buttonPress = false;
+    [HideInInspector] public bool Blu;
 
     [Header("Sound")]
     [SerializeField] public AudioSource ChangeColorS;
+    [SerializeField] public AudioSource Walk;
+
 
 
     bool platform = false;
@@ -35,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
      void Awake()
     {
         instance = this;
+        var skeleton = skelMecanim.Skeleton;
+            skeleton.SetSkin("blu");
+            R.SetActive(false);
+            Blu = true;
 
     }
         
@@ -104,13 +110,17 @@ void OnCollisionEnter(Collision other)
         
 	}
 
-    private void  WalkSound()
+    public void  WalkSound()
 {
-  AudioManager.instance.PlaySFX(4);
+                Walk.Play();
 }
 
 
-
+ public void  NullParent()
+{
+                platform = false;
+			_player.transform.parent = null;
+}
 
 private void OnCollisionExit(Collision other){
 	if (other.gameObject.tag == "Platforms")

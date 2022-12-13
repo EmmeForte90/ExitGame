@@ -24,6 +24,7 @@ public class DeathTrigger : MonoBehaviour {
 
                 Instantiate(PlayerMovement.instance.DieAnm, PlayerMovement.instance.transform.position, transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(false);
+                PlayerMovement.instance.NullParent();
                 PlayerMovement.instance.death = true;
                 StartCoroutine(Die());
 
@@ -43,6 +44,8 @@ IEnumerator Die()
                     PlayerMovement.instance.death = false;
                 Instantiate(PlayerMovement.instance._fade, PlayerMovement.instance.transform.position, transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(true);
+                    PlayerMovement.instance.NullParent();
+
 
                 }
     }

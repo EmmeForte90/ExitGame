@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ChangeColor : MonoBehaviour
 {
-     public GameObject B;
-     public GameObject R;
-     public GameObject eff;
+    [SerializeField] GameObject B;
+    [SerializeField] GameObject R;
+    [SerializeField] GameObject eff;
+    [SerializeField] GameObject Coll;
 
-     bool Blu;
+
+    [SerializeField] bool Blu;
 
 
     void Update()
@@ -27,6 +29,35 @@ public class ChangeColor : MonoBehaviour
             Blu = true;
 
         }
-        }
+
+if (PlayerMovement.instance.Blu && Blu)
+        {
+            Coll.SetActive(true);
+		}
+        else if (PlayerMovement.instance.Blu && !Blu)
+        {
+            Coll.SetActive(false);
+		}
+
+
+if (!PlayerMovement.instance.Blu && Blu)
+        {
+            Coll.SetActive(false);
+		}
+        else if (!PlayerMovement.instance.Blu && !Blu)
+        {
+            Coll.SetActive(true);
+		}
+
+
     }
+
+    }
+
+
+
+
+
+
+
 
