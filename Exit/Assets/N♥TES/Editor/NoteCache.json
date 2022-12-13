@@ -1,0 +1,34 @@
+{
+    "notes": [
+        {
+            "noteText": "",
+            "show": false,
+            "typeName": "UnityEngine.Material",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-3-a97c105638bdf8b4a8650670310a4cd3-2100000-0"
+        },
+        {
+            "noteText": "Sprite del Checkpoint",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-1-ca22fe242ad3c474ca3aad2bd6c5b2ef-8092527774370077166-0"
+        },
+        {
+            "noteText": "Inserire lo script per il vfx al contatto",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-1-ca22fe242ad3c474ca3aad2bd6c5b2ef-8092527772705256682-0"
+        },
+        {
+            "noteText": "Prospettiva aerea e separatore ad area\n",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-2-d9475bbea1db7da4c9c1d0be13d3a9bb-958036608-0"
+        },
+        {
+            "noteText": "Inserire lo script per il vfx al contatto",
+            "show": true,
+            "typeName": "UnityEngine.GameObject",
+            "GlobalObjectSerialization": "GlobalObjectId_V1-2-00000000000000000000000000000000-8092527772705256682-0"
+        }
+    ]
+}
