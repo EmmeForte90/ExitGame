@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated September 24, 2021. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2021, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -177,7 +177,14 @@ namespace Spine.Unity.Editor {
 							requiredPaths.Add((string)data["path"]);
 						else if (data.ContainsKey("name"))
 							requiredPaths.Add((string)data["name"]);
-						else
+						else if (data.ContainsKey("sequence")) {
+							Sequence sequence = SkeletonJson.ReadSequence(data["sequence"]);
+							if (sequence != null)
+								for (int index = 0; index < sequence.Regions.Length; ++index)
+									requiredPaths.Add(sequence.GetPath(attachment.Key, index));
+							else
+								requiredPaths.Add(attachment.Key);
+						} else
 							requiredPaths.Add(attachment.Key);
 					}
 				}
@@ -214,6 +221,26 @@ namespace Spine.Unity.Editor {
 			return GetMatchingAtlas(requiredPaths, atlasAssets);
 		}
 
+		internal static AtlasRegion FindRegionIgnoringNumberSuffix (this Atlas atlas, string regionPath) {
+			AtlasRegion region = atlas.FindRegion(regionPath);
+			if (region != null)
+				return region;
+			return atlas.FindRegionWithNumberSuffix(regionPath);
+		}
+
+		internal static AtlasRegion FindRegionWithNumberSuffix (this Atlas atlas, string regionPath) {
+			int pathLength = regionPath.Length;
+			foreach (AtlasRegion region in atlas.Regions) {
+				string name = region.name;
+				if (name.StartsWith(regionPath)) {
+					string suffix = name.Substring(pathLength);
+					if (suffix.All(c => c >= '0' && c <= '9'))
+						return region;
+				}
+			}
+			return null;
+		}
+
 		internal static AtlasAssetBase GetMatchingAtlas (List<string> requiredPaths, List<AtlasAssetBase> atlasAssets) {
 			AtlasAssetBase atlasAssetMatch = null;
 
@@ -221,7 +248,7 @@ namespace Spine.Unity.Editor {
 				Atlas atlas = a.GetAtlas();
 				bool failed = false;
 				foreach (string regionPath in requiredPaths) {
-					if (atlas.FindRegion(regionPath) == null) {
+					if (atlas.FindRegionIgnoringNumberSuffix(regionPath) == null) {
 						failed = true;
 						break;
 					}
@@ -243,14 +270,26 @@ namespace Spine.Unity.Editor {
 				this.requirementList = requirementList;
 			}
 
-			public RegionAttachment NewRegionAttachment (Skin skin, string name, string path) {
-				requirementList.Add(path);
-				return new RegionAttachment(name);
+			public RegionAttachment NewRegionAttachment (Skin skin, string name, string path, Sequence sequence) {
+				var regionAttachment = new RegionAttachment(name);
+				if (sequence != null)
+					LoadSequence(path, sequence);
+				else {
+					requirementList.Add(path);
+					AssignDummyRegion(regionAttachment);
+				}
+				return regionAttachment;
 			}
 
-			public MeshAttachment NewMeshAttachment (Skin skin, string name, string path) {
-				requirementList.Add(path);
-				return new MeshAttachment(name);
+			public MeshAttachment NewMeshAttachment (Skin skin, string name, string path, Sequence sequence) {
+				var meshAttachment = new MeshAttachment(name);
+				if (sequence != null)
+					LoadSequence(path, sequence);
+				else {
+					requirementList.Add(path);
+					AssignDummyRegion(meshAttachment);
+				}
+				return meshAttachment;
 			}
 
 			public BoundingBoxAttachment NewBoundingBoxAttachment (Skin skin, string name) {
@@ -267,6 +306,18 @@ namespace Spine.Unity.Editor {
 
 			public ClippingAttachment NewClippingAttachment (Skin skin, string name) {
 				return new ClippingAttachment(name);
+			}
+
+			private void LoadSequence (string basePath, Sequence sequence) {
+				TextureRegion[] regions = sequence.Regions;
+				for (int i = 0, n = regions.Length; i < n; i++) {
+					string path = sequence.GetPath(basePath, i);
+					requirementList.Add(path);
+				}
+			}
+
+			private static void AssignDummyRegion (IHasTextureRegion attachment) {
+				attachment.Region = new AtlasRegion();
 			}
 		}
 		#endregion
@@ -285,6 +336,11 @@ namespace Spine.Unity.Editor {
 				case ".atlas":
 					if (SpineEditorUtilities.Preferences.atlasTxtImportWarning) {
 						Debug.LogWarningFormat("`{0}` : If this file is a Spine atlas, please change its extension to `.atlas.txt`. This is to allow Unity to recognize it and avoid filename collisions. You can also set this file extension when exporting from the Spine editor.", str);
+					}
+					break;
+				case ".skel":
+					if (SpineEditorUtilities.Preferences.atlasTxtImportWarning) {
+						Debug.LogWarningFormat("`{0}` : If this file is a Spine skeleton, please change its extension to `.skel.bytes`. This is to allow Unity to recognize it and avoid filename collisions. You can also set this file extension when exporting from the Spine editor.", str);
 					}
 					break;
 				case ".txt":
@@ -317,6 +373,8 @@ namespace Spine.Unity.Editor {
 				}
 				}
 			}
+
+			AddDependentAtlasIfImageChanged(atlasPaths, imagePaths);
 
 			// Import atlases first.
 			var newAtlases = new List<AtlasAssetBase>();
@@ -418,6 +476,18 @@ namespace Spine.Unity.Editor {
 						string assetPath = SpineEditorUtilities.DataReloadHandler.savedSkeletonDataAssetAtSKeletonGraphicID[skeletonGraphicID];
 						skeletonGraphic.skeletonDataAsset = (SkeletonDataAsset)AssetDatabase.LoadAssetAtPath<SkeletonDataAsset>(assetPath);
 					}
+				}
+			}
+		}
+
+		static void AddDependentAtlasIfImageChanged (List<string> atlasPaths, List<string> imagePaths) {
+			foreach (var imagePath in imagePaths) {
+				string atlasPath = imagePath.Replace(".png", ".atlas.txt");
+				if (!System.IO.File.Exists(atlasPath))
+					continue;
+
+				if (!atlasPaths.Contains(atlasPath)) {
+					atlasPaths.Add(atlasPath);
 				}
 			}
 		}
@@ -588,14 +658,14 @@ namespace Spine.Unity.Editor {
 					}
 				} else {
 					vestigialMaterials.Remove(material);
-				}
-
-				if (material != null) {
 					if (texture != null)
 						material.mainTexture = texture;
 					EditorUtility.SetDirty(material);
 					// note: don't call AssetDatabase.SaveAssets() since this would trigger OnPostprocessAllAssets() every time unnecessarily.
-					populatingMaterials.Add(material); //atlasAsset.materials[i] = mat;
+				}
+
+				if (material != null) {
+					populatingMaterials.Add(material);
 				}
 			}
 
@@ -814,6 +884,7 @@ namespace Spine.Unity.Editor {
 				return false;
 			}
 
+			texImporter.sRGBTexture = false; // as PMA is the default, prevent any border issues that may arise when enabling mipmaps later.
 			texImporter.textureCompression = TextureImporterCompression.Uncompressed;
 			texImporter.alphaSource = TextureImporterAlphaSource.FromInput;
 			texImporter.mipmapEnabled = false;
@@ -1073,7 +1144,7 @@ namespace Spine.Unity.Editor {
 					foreach (var atlasAsset in atlasAssets) {
 						var atlas = atlasAsset.GetAtlas();
 						for (int i = 0; i < missingRegions.Count; i++) {
-							if (atlas.FindRegion(missingRegions[i]) != null) {
+							if (atlas.FindRegionIgnoringNumberSuffix(missingRegions[i]) != null) {
 								missingRegions.RemoveAt(i);
 								i--;
 							}
@@ -1107,7 +1178,7 @@ namespace Spine.Unity.Editor {
 							var atlas = selectedAtlasAsset.GetAtlas();
 							bool hasValidRegion = false;
 							foreach (string str in missingRegions) {
-								if (atlas.FindRegion(str) != null) {
+								if (atlas.FindRegionIgnoringNumberSuffix(str) != null) {
 									hasValidRegion = true;
 									break;
 								}
@@ -1175,7 +1246,7 @@ namespace Spine.Unity.Editor {
 		internal static readonly List<SkeletonComponentSpawnType> additionalSpawnTypes = new List<SkeletonComponentSpawnType>();
 
 		public static void TryInitializeSkeletonRendererSettings (SkeletonRenderer skeletonRenderer, Skin skin = null) {
-			const string PMAShaderQuery = "Spine/Skeleton";
+			const string PMAShaderQuery = "Spine/";
 			const string TintBlackShaderQuery = "Tint Black";
 
 			if (skeletonRenderer == null) return;
@@ -1261,7 +1332,6 @@ namespace Spine.Unity.Editor {
 			}
 
 			newSkeletonAnimation.loop = SpineEditorUtilities.Preferences.defaultInstantiateLoop;
-			newSkeletonAnimation.skeleton.Update(0);
 			newSkeletonAnimation.state.Update(0);
 			newSkeletonAnimation.state.Apply(newSkeletonAnimation.skeleton);
 			newSkeletonAnimation.skeleton.UpdateWorldTransform();
@@ -1347,7 +1417,6 @@ namespace Spine.Unity.Editor {
 				throw e;
 			}
 
-			newSkeletonMecanim.skeleton.Update(0);
 			newSkeletonMecanim.skeleton.UpdateWorldTransform();
 			newSkeletonMecanim.LateUpdate();
 

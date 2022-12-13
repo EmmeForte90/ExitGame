@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated September 24, 2021. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2021, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -96,7 +96,12 @@ namespace Spine.Unity {
 			"\nWarning: 'Canvas Group Tint Black' is enabled at SkeletonGraphic but not 'CanvasGroup Compatible' at the Material!\n\nPlease\n"
 			+ "a) enable 'CanvasGroup Compatible' at the Material or\n"
 			+ "b) disable 'Canvas Group Tint Black' at the SkeletonGraphic component under 'Advanced'.\n"
-			+ "You may want to duplicate the 'SkeletonGraphicDefault' material and change settings at the duplicate to not affect all instances.";
+			+ "You may want to duplicate the 'SkeletonGraphicTintBlack' material and change settings at the duplicate to not affect all instances.";
+		public static readonly string kCanvasGroupCompatibleDisabledMessage =
+			"\nWarning: 'CanvasGroup Compatible' is enabled at the Material but 'Canvas Group Tint Black' is disabled at SkeletonGraphic!\n\nPlease\n"
+			+ "a) disable 'CanvasGroup Compatible' at the Material or\n"
+			+ "b) enable 'Canvas Group Tint Black' at the SkeletonGraphic component under 'Advanced'.\n"
+			+ "You may want to duplicate the 'SkeletonGraphicTintBlack' material and change settings at the duplicate to not affect all instances.";
 
 		public static bool IsMaterialSetupProblematic (SkeletonRenderer renderer, ref string errorMessage) {
 			var materials = renderer.GetComponent<Renderer>().sharedMaterials;
@@ -151,6 +156,11 @@ namespace Spine.Unity {
 				if (settings.canvasGroupTintBlack == true && !IsCanvasGroupCompatible(material)) {
 					isProblematic = true;
 					errorMessage += kCanvasGroupCompatibleMessage;
+				}
+				if (settings.tintBlack == true && settings.canvasGroupTintBlack == false
+					&& IsCanvasGroupCompatible(material)) {
+					isProblematic = true;
+					errorMessage += kCanvasGroupCompatibleDisabledMessage;
 				}
 			}
 			return isProblematic;
