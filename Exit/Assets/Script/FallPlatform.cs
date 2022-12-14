@@ -11,6 +11,9 @@ public class FallPlatform : MonoBehaviour
     private float waitCounter;
     [SerializeField] public float agroRange;
     private bool slamming, resetting;
+    [SerializeField]
+    protected Animator _anim;
+    bool danger = false;
 	
 	[Header("Time")]
 	[SerializeField] float timerValue;
@@ -20,6 +23,8 @@ public class FallPlatform : MonoBehaviour
     {
         startPoint = thePlatform.position;
 		timerValue = waitFall;
+        _anim = GetComponent<Animator>();
+
 
     }
 #region  indicatori engine
@@ -42,6 +47,8 @@ void OnDrawGizmosSelected()
         {
             if (!slamming && !resetting)
         {
+            danger = true;
+            _anim.SetBool("danger", true);
             StartCoroutine(UpdateTimer());
 			
         }
@@ -61,6 +68,8 @@ void OnDrawGizmosSelected()
                 {
                     slamming = false;
                     resetting = true;
+                    danger = false;
+                    _anim.SetBool("danger", false);
                 }
 
             }
@@ -69,6 +78,7 @@ void OnDrawGizmosSelected()
         if (resetting)
         {
             thePlatform.position = Vector3.MoveTowards(thePlatform.position, slammerReset.position, resetSpeed * Time.deltaTime);
+           
 
             if (thePlatform.position == slammerReset.position)
             {

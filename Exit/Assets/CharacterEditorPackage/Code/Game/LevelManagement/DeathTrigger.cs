@@ -22,7 +22,7 @@ public class DeathTrigger : MonoBehaviour {
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
 
-                Instantiate(PlayerMovement.instance.DieAnm, PlayerMovement.instance.transform.position, transform.rotation);
+                Instantiate(PlayerMovement.instance.DieAnm, PlayerMovement.instance.transform.position, PlayerMovement.instance.transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(false);
                 PlayerMovement.instance.NullParent();
                 PlayerMovement.instance.death = true;
@@ -42,7 +42,7 @@ IEnumerator Die()
                 {
                     InSceneLevelSwitcher.Get().Respawn();
                     PlayerMovement.instance.death = false;
-                Instantiate(PlayerMovement.instance._fade, PlayerMovement.instance.transform.position, transform.rotation);
+                Instantiate(PlayerMovement.instance._fade, PlayerMovement.instance.transform.position, PlayerMovement.instance.transform.rotation);
                 PlayerMovement.instance._player.gameObject.SetActive(true);
                     PlayerMovement.instance.NullParent();
 
