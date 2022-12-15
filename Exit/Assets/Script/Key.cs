@@ -9,6 +9,8 @@ public class Key : MonoBehaviour
 
         [SerializeField] public GameObject boof;
         [SerializeField] public GameObject key;
+        [Header("Sound")]
+    [SerializeField] public AudioSource AudioK;
 
 
     [SerializeField]
@@ -34,8 +36,7 @@ public class Key : MonoBehaviour
             _colissionEntered?.Invoke();
             Instantiate(boof, key.transform.position, key.transform.rotation);
             key.gameObject.SetActive(false);
-                AudioManager.instance.PlaySFX(2);
-
+        AudioK.Play();
 
 
             }

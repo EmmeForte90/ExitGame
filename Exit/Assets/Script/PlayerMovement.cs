@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool Blu;
 
     [Header("Sound")]
-    [SerializeField] public AudioSource ChangeColorS;
     [SerializeField] public AudioSource Walk;
 
 
@@ -63,6 +62,14 @@ public class PlayerMovement : MonoBehaviour
             pause.gameObject.SetActive(false);
 
         }
+
+if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+
+            Instantiate(eff, _player.transform.position, _player.transform.rotation);
+        }
+
+
 /*
         if(Input.GetKeyDown(KeyCode.LeftShift) && Blu)
         {
@@ -119,7 +126,7 @@ void OnCollisionEnter(Collision other)
 
  public void  NullParent()
 {
-                platform = false;
+            platform = false;
 			_player.transform.parent = null;
 }
 

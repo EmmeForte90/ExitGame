@@ -13,6 +13,9 @@ using Spine;
 //--------------------------------------------------------------------
 public class GroundedCharacterController : CharacterControllerBase
 {
+    [Header("Sound")]
+    [SerializeField] public AudioSource Jumpy;
+
     [SerializeField] float m_WalkForce = 0.0f;
     [SerializeField] float m_WalkForceApplyLimit = 0.0f;
     [SerializeField] float m_StoppingForce = 0.0f;
@@ -196,9 +199,7 @@ public class GroundedCharacterController : CharacterControllerBase
 
     public void Jump(Vector2 a_Velocity, bool a_OverridePreviousVelocity = true, bool a_AllowLowJumps = true, bool a_ConsumeJumpInput = true)
     {
-
-        AudioManager.instance.PlaySFX(3);
-
+        Jumpy.Play();
         if (a_AllowLowJumps)
         {
             m_JumpCutPossible = true;

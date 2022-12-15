@@ -59,6 +59,8 @@ public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
             { 
             //_colissionEntered?.Invoke();
             AudioManager.instance.StopMFX(0);
+            AudioManager.instance.StopMFX(1);
+            AudioManager.instance.StopMFX(2);
             StartCoroutine(FadeOut(bgmN, 1f));
             //AudioSourceCrossfade.instance.Fade();
              StartCoroutine(FadeIn(bgmD, 1f));
@@ -82,7 +84,9 @@ public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
             //_colissionExit?.Invoke();
             
             StartCoroutine(FadeOut(bgmD, 1f));
-            AudioManager.instance.PlayMFX(1);
+            AudioManager.instance.StopMFX(0);
+            AudioManager.instance.StopMFX(1);
+            AudioManager.instance.StopMFX(2);
             StartCoroutine(FadeIn(bgmN, 1f));
             //AudioManager.instance.PlayMFX(1);
             //AudioManager.instance.PlayMFX(1);

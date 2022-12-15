@@ -58,6 +58,10 @@ public class DogMonster : MonoBehaviour
     [SerializeField] LayerMask playerlayer;
     [SerializeField] public float agroRange;
 
+     [Header("Sound")]
+    [SerializeField] public AudioSource Grr;
+    [SerializeField] public AudioSource Growl;
+
     //[Header ("Morte")]
     //public GameObject DIE;
 
@@ -203,19 +207,21 @@ void OnDrawGizmosSelected()
 
 private void  IdleSound()
 {
-  AudioManager.instance.PlaySFX(7);
+                Grr.Play();
 }
 
 private void  AgroSound()
 {
-  AudioManager.instance.PlaySFX(8);
+                Growl.Play();
 }
 
 #region  Insegue il player
 
 private void  ChasePlayer()
 {
-   
+               
+
+
     anim.SetBool("isRunning", true);
 if(transform.position.x < PlayerMovement.instance.transform.position.x)
 {
@@ -242,11 +248,15 @@ private void StopChasingPlayer()
     StopAttack();
     anim.SetBool("isRunning", false);
     RB.velocity = new Vector3(moveSpeed, 0);
+    Grr.Stop();
+    Growl.Stop();
 }
 
 private void waitPlayer()
 {
     StopAttack();
+    Grr.Play();
+    Growl.Stop();
     anim.SetBool("isRunning", false);
     anim.SetBool("isMoving", false);
     RB.velocity = new Vector3(0, 0);

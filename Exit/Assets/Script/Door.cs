@@ -5,7 +5,8 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
   private Animator _animator;
-  
+  [Header("Sound")]
+    [SerializeField] public AudioSource Gate;
         
 
   private void Awake()
@@ -17,8 +18,7 @@ public class Door : MonoBehaviour
 public void Open()
 {
     _animator.SetTrigger(name:"Open");
-      AudioManager.instance.PlaySFX(9);
-
+Gate.Play();
 }
 
 }
