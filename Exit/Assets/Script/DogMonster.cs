@@ -59,7 +59,7 @@ public class DogMonster : MonoBehaviour
     [SerializeField] public float agroRange;
 
      [Header("Sound")]
-    [SerializeField] public AudioSource Grr;
+   // [SerializeField] public AudioSource Grr;
     [SerializeField] public AudioSource Growl;
 
     //[Header ("Morte")]
@@ -86,13 +86,17 @@ public class DogMonster : MonoBehaviour
 //Calcolo distanza tra player e nemico
 float disToPlayer = Vector3.Distance(transform.position, PlayerMovement.instance.transform.position);
 Debug.DrawRay(transform.position, new Vector3(agroRange, 0), Color.red);
+
+
 #region Se il nemico NON sta attaccando...
 if(PlayerMovement.instance.death)
 {
             waitPlayer();
+            stopSound();
 
 }
-else if(!PlayerMovement.instance.death){
+else if(!PlayerMovement.instance.death)
+{
 
 
 if(!isAttack && disToPlayer > agroRange){
@@ -207,13 +211,18 @@ void OnDrawGizmosSelected()
 
 private void  IdleSound()
 {
-                Grr.Play();
 }
 
 private void  AgroSound()
 {
                 Growl.Play();
 }
+private void  stopSound()
+{
+Growl.Stop();
+}
+
+
 
 #region  Insegue il player
 
@@ -248,15 +257,13 @@ private void StopChasingPlayer()
     StopAttack();
     anim.SetBool("isRunning", false);
     RB.velocity = new Vector3(moveSpeed, 0);
-    Grr.Stop();
-    Growl.Stop();
+    
 }
 
 private void waitPlayer()
 {
     StopAttack();
-    Grr.Play();
-    Growl.Stop();
+    
     anim.SetBool("isRunning", false);
     anim.SetBool("isMoving", false);
     RB.velocity = new Vector3(0, 0);

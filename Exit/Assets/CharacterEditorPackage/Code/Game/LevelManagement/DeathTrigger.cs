@@ -34,6 +34,8 @@ public class DeathTrigger : MonoBehaviour {
         }
     }
 
+    
+
 IEnumerator Die()
     {  
     yield return new WaitForSeconds(startDie);

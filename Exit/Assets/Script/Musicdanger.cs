@@ -17,6 +17,24 @@ public class Musicdanger : MonoBehaviour
     [SerializeField] public AudioSource bgmN;
         [SerializeField] public AudioSource bgmD;
 
+
+
+        public void Update()
+{
+    if(PlayerMovement.instance.death)
+{
+            stopSound();
+
+}
+}
+
+   public void  stopSound()
+{
+                AudioManager.instance.PlayMFX(1);
+bgmN.Stop();
+bgmD.Stop();
+}
+
 public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
     {
         float startVolume = bgm.volume;
@@ -62,11 +80,7 @@ public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
             AudioManager.instance.StopMFX(1);
             AudioManager.instance.StopMFX(2);
             StartCoroutine(FadeOut(bgmN, 1f));
-            //AudioSourceCrossfade.instance.Fade();
              StartCoroutine(FadeIn(bgmD, 1f));
-
-            //AudioManager.instance.PlayMFX(2);
-            DogMonster.instance.sfxM = true;
 
 
             }
@@ -83,17 +97,13 @@ public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
             { 
             //_colissionExit?.Invoke();
             
-            StartCoroutine(FadeOut(bgmD, 1f));
             AudioManager.instance.StopMFX(0);
             AudioManager.instance.StopMFX(1);
             AudioManager.instance.StopMFX(2);
             StartCoroutine(FadeIn(bgmN, 1f));
-            //AudioManager.instance.PlayMFX(1);
-            //AudioManager.instance.PlayMFX(1);
-            //AudioManager.instance.StopSFX(8);
-            //AudioManager.instance.StopSFX(7);
-            DogMonster.instance.sfxM = false;
+                        StartCoroutine(FadeOut(bgmD, 1f));
 
+            
 
             }
         }

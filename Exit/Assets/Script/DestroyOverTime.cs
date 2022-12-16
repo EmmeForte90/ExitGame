@@ -9,28 +9,33 @@ public class DestroyOverTime : MonoBehaviour
     float startFade = 1f;
     [SerializeField] GameObject FadeAnm;
     [SerializeField] bool needFade = true;
+    [SerializeField] bool needSound = true;
+
 [Header("Sound")]
-    [SerializeField] public AudioSource glitchS;
+[SerializeField] public AudioSource Death;
+
 
     void Update()
     {
         Destroy(gameObject, lifeTime);
+
+
         if(needFade)
         {
+            if(needSound)
+            {
+                Death.Play();
+            }
         StartCoroutine(Fade());
         }
         
     }
 
- public void  GlitchS()
-{
-                glitchS.Play();
-}
 
     IEnumerator Fade()
     {  
     yield return new WaitForSeconds(startFade);
-            FadeAnm.gameObject.SetActive(true);
+    FadeAnm.gameObject.SetActive(true);
     }
 
 }

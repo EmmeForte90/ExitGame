@@ -12,10 +12,22 @@ public class MusicEffectArea : MonoBehaviour
 
       [SerializeField]
       private UnityEvent _colissionExit;*/
+          public static MusicEffectArea instance;
+
 
          [SerializeField]  bool saw = false;
          [SerializeField] public AudioSource bgmS;
         [SerializeField] public AudioSource bgmP;
+
+public void Update()
+{
+    if(PlayerMovement.instance.death)
+{
+            stopSound();
+
+}
+}
+
 
 public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
     {
@@ -71,6 +83,11 @@ public  IEnumerator FadeOut(AudioSource bgm, float FadeTime)
             }
         }
     }
+    public void  stopSound()
+{
+ bgmS.Stop();
+bgmP.Stop();
+}
 
       void OnTriggerExit(Collider a_Collider)
     {

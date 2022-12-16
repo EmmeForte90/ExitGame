@@ -52,7 +52,7 @@ public class Key : MonoBehaviour
             if (controlledCapsuleCollider.AreCollisionsActive())
             { 
             _colissionExit?.Invoke();
-            Instantiate(boof, boof.transform.position, boof.transform.rotation);
+            Instantiate(boof, key.transform.position, key.transform.rotation);
             key.gameObject.SetActive(false);
 
 

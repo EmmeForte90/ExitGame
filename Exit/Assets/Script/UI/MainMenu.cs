@@ -44,9 +44,9 @@ public class MainMenu : MonoBehaviour
         }
 
 //        resolutionDropdown.ClearOptions();
-        resolutionDropdown.value = currentResolutionIndex;
+//        resolutionDropdown.value = currentResolutionIndex;
         //resolutionDropdown.RefreshValue();
-        resolutionDropdown.AddOptions(options);
+//        resolutionDropdown.AddOptions(options);
 
 
 

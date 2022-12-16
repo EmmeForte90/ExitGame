@@ -10,6 +10,7 @@ public class VfxBlast : MonoBehaviour
     Rigidbody myRigidbody;
     //Il corpo rigido
     BatMonster bat;
+    [SerializeField] bool  bM = false;
     //Attribuscie una variabile allo script di movimento del bat
     //Per permettere al proiettile di emularne l'andamento
     float xSpeed;
@@ -19,9 +20,12 @@ public class VfxBlast : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody>();
         //Recupera i componenti del rigidbody
+        if(bM)
+        {
         bat = FindObjectOfType<BatMonster>();
-        //Recupera i componenti dello script
         xSpeed = bat.transform.localScale.x * bulletSpeed;
+        }
+        //Recupera i componenti dello script
         //La variabile è uguale alla scala moltiplicata la velocità del proiettile
         //Se il bat si gira  anche lo spawn del proittile farà lo stesso
     }
