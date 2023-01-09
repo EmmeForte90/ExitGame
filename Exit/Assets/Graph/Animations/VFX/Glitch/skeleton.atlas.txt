@@ -1,46 +1,92 @@
 skeleton.png
-size:2048,256
+size:2048,2048
 filter:Linear,Linear
 pma:true
-Glitch chroma _ you 108
-bounds:2,2,200,113
-rotate:90
-Glitch chroma _ you 109
-bounds:117,2,200,113
-rotate:90
-Glitch chroma _ you 110
-bounds:232,2,200,113
-rotate:90
-Glitch chroma _ you 111
-bounds:347,2,200,113
-rotate:90
-Glitch chroma _ you 112
-bounds:462,2,200,113
-rotate:90
-Glitch chroma _ you 113
-bounds:577,2,200,113
-rotate:90
-Glitch chroma _ you 114
-bounds:692,2,200,113
-rotate:90
-Glitch chroma _ you 115
-bounds:807,2,200,113
-rotate:90
-Glitch chroma _ you 116
-bounds:922,2,200,113
-rotate:90
-Glitch chroma _ you 120
-bounds:922,2,200,113
-rotate:90
-Glitch chroma _ you 117
-bounds:1037,2,200,113
-rotate:90
-Glitch chroma _ you 118
-bounds:1152,2,200,113
-rotate:90
-Glitch chroma _ you 119
-bounds:1267,2,200,113
-rotate:90
-Glitch chroma _ you 121
-bounds:1382,2,200,113
-rotate:90
+im/Glitc_01
+bounds:2,1262,250,250
+im/Glitc_02
+bounds:254,1262,250,250
+im/Glitc_03
+bounds:506,1262,250,250
+im/Glitc_04
+bounds:758,1262,250,250
+im/Glitc_05
+bounds:1010,1262,250,250
+im/Glitc_06
+bounds:1262,1262,250,250
+im/Glitc_07
+bounds:1514,1262,250,250
+im/Glitc_08
+bounds:1766,1262,250,250
+im/Glitc_09
+bounds:2,1010,250,250
+im/Glitc_10
+bounds:254,1010,250,250
+im/Glitc_11
+bounds:506,1010,250,250
+im/Glitc_12
+bounds:758,1010,250,250
+im/Glitc_13
+bounds:1010,1010,250,250
+im/Glitc_14
+bounds:1262,1010,250,250
+im/Glitc_15
+bounds:1514,1010,250,250
+im/Glitc_16
+bounds:1766,1010,250,250
+im/Glitc_17
+bounds:2,758,250,250
+im/Glitc_18
+bounds:254,758,250,250
+im/Glitc_19
+bounds:506,758,250,250
+im/Glitc_20
+bounds:758,758,250,250
+im/Glitc_21
+bounds:1010,758,250,250
+im/Glitc_22
+bounds:1262,758,250,250
+im/Glitc_23
+bounds:1514,758,250,250
+im/Glitc_24
+bounds:1766,758,250,250
+im/Glitc_25
+bounds:2,506,250,250
+im/Glitc_26
+bounds:254,506,250,250
+im/Glitc_27
+bounds:506,506,250,250
+im/Glitc_28
+bounds:758,506,250,250
+im/Glitc_29
+bounds:1010,506,250,250
+im/Glitc_30
+bounds:1262,506,250,250
+im/Glitc_31
+bounds:1514,506,250,250
+im/Glitc_32
+bounds:1766,506,250,250
+im/Glitc_33
+bounds:2,254,250,250
+im/Glitc_34
+bounds:254,254,250,250
+im/Glitc_35
+bounds:506,254,250,250
+im/Glitc_36
+bounds:758,254,250,250
+im/Glitc_37
+bounds:1010,254,250,250
+im/Glitc_38
+bounds:1262,254,250,250
+im/Glitc_39
+bounds:1514,254,250,250
+im/Glitc_40
+bounds:1766,254,250,250
+im/Glitc_41
+bounds:2,2,250,250
+im/Glitc_42
+bounds:254,2,250,250
+im/Glitc_43
+bounds:506,2,250,250
+im/Glitc_44
+bounds:758,2,250,250
